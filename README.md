@@ -30,7 +30,7 @@ CGMTSA package needs orca to export pdf file of CGM plot. Orca is an Electron ap
 - Open a new Command Prompt and verify that the orca executable is available on your PATH.
 ## 3.	License
 This project is licensed under The MIT License.
-## 4. Install CGMTS Package in R
+## 4. Install CGMTSA Package in R
 The package can be installed from GitHub directly:
 ```
 library(“devtools”)
@@ -63,8 +63,8 @@ There are three main functions in CGMTSA: prepro, cgmmetrics and cgmplot. The pr
 The CGMTSA package contains an example CGM file, we can load it and test the functions of CGMTSA package on it. First, use prepro() function to detect outliers and impute missing in CGM data.
 1. Manual format
 ```
-library(CGMTS)
-datadir <- system.file("extdata", package = "CGMTS")
+library(CGMTSA)
+datadir <- system.file("extdata", package = "CGMTSA")
 prepro(inputdir=paste(datadir, "/manualFormat/", sep = ""), outputdir, outlierdet = TRUE, interval = 15, imputation = TRUE, immethod = "linear", maxgap = 60, compeleteday = FALSE, removeday = FALSE, device = 0, transunits = FALSE, removeflday = TRUE)
 cgmmetrics(inputdir, outputdir ,useig = TRUE, threshold =1, bthreshold = 3.9, athreshold = 10, interval = 15)
 cgmplot(inputdir, outputdir, useig= TRUE, markoutliers= TRUE, interval = 15, diffnum = 1, html = TRUE)
