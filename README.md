@@ -34,7 +34,7 @@ This project is licensed under The MIT License.
 The package can be installed from GitHub directly:
 ```
 library(“devtools”)
-install_github(“RyanJ-Shao/CGMTS”)
+install_github(“RyanJ-Shao/CGMTSA”)
 ```
 ## 5. Data Format
 CGMTSA package accept CSV file as input. The input file includes three columns: "timestamp","sglucose","bglucose", every column are separated by comma. For example:
@@ -49,7 +49,7 @@ timestamp |	sglucose | bglucose
 
 The “sglucose” column is glucose from CGM sensor, “bglucose” is glucose from calibration glucose or SMBG. If sglucose is missing, the timestamp of this point still needs to be recorded. It also can directly read original data from Abbott FreeStyle Libre, Dexcom G6 and Medtronic Ipro2.
 
-## 6. Running CGMTS
+## 6. Running CGMTSA
 There are three main functions in CGMTSA: prepro, cgmmetrics and cgmplot. The prepro() function preprocess CGM data, its main function including: read all CSV files from the input directory, detect outliers from CGM data and impute the missing data. The cgmmetrics() function calculate common CGM metrics, such as standard deviation (SD), coefficient of variation (CV), mean glucose, etc. The cgmplot() function generates many different plots of CGM data, such as glucose trace, autocorrelation function plot, partial autocorrelation function plot, etc.
 #### (1) Preprocess CGM data
 - The prepro() function takes a directory which contains CGM files as input, and export them to an output directory. The prepro() function can directly read original data from Abbott FreeStyle Libre, Dexcom G6 and Medtronic Ipro2 or manually format. If parameters “device” is set to 0, it indicates the file is manually format, 1 indicates the file is FreeStyle Libre format, 2 indicates the file is Dexcom G6, 3 indicates the file is Ipro2 format. In this function we will remove the first and end day of CGM data, because the data quality of these two days is bad in general. The prepro() function includes two main functions: outliers detection and imputation.
