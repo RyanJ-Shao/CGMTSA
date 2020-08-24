@@ -116,6 +116,7 @@ qcfun<- function(cgmts, outlierdet = TRUE, interval = 15, imputation = FALSE, im
         cgmts[cgmts$timedate ==d,]$outliers <- udcgm$outliers
       }
     }
-    return(cgmts)
+    
   }
+  return(cgmts)
 }
