@@ -65,7 +65,7 @@ cgmmetrics <- function(inputdir, outputdir, useig = FALSE, diffnum = 1, threshol
                            MODD = moddvec,acf_1 = gacf[1], acf_2 = gacf[2], acf_3 = gacf[3],
                            acf_4 = gacf[4], acf_5 = gacf[5], pacf_1 = gpacf[1], pacf_2 = gpacf[2],
                            pacf_3 = gpacf[3], pacf_4 = gpacf[4], pacf_5 = gpacf[5])
-  write.csv(summetrics, paste(outputdir,fname,"metricsSummary.csv",sep = ""),row.names = FALSE)
+  write.csv(summetrics, paste(outputdir,"metricsSummary.csv",sep = ""),row.names = FALSE)
 
 }
 
