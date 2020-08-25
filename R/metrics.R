@@ -25,6 +25,16 @@ cgmmetrics <- function(inputdir, outputdir, useig = FALSE, diffnum = 1, threshol
   magevec <- c()
   tirvec <- c()
   moddvec <- c()
+  acf_1vec <- c()
+  acf_2vec <- c()
+  acf_3vec <- c()
+  acf_4vec <- c()
+  acf_5vec <- c()
+  pacf_1vec <- c()
+  pacf_2vec <- c()
+  pacf_3vec <- c()
+  pacf_4vec <- c()
+  pacf_5vec <- c()
   for(f in fileNames){
     fname <- unlist(strsplit(f, split = "\\."))[1]
     fnamevec <- append(fnamevec, fname)
@@ -57,16 +67,25 @@ cgmmetrics <- function(inputdir, outputdir, useig = FALSE, diffnum = 1, threshol
     moddvec <- append(moddvec, modd)
     gacf <- acfcoff(cgmtsall, useig = useig, diffnum = diffnum, interval = interval)
     gpacf <- pacfcoff(cgmtsall, useig = useig, diffnum = diffnum, interval = interval)
+    acf_1vec <- append(acf_1vec, gacf[1])
+    acf_2vec <- append(acf_2vec, gacf[2])
+    acf_3vec <- append(acf_3vec, gacf[3])
+    acf_4vec <- append(acf_4vec, gacf[4])
+    acf_5vec <- append(acf_5vec, gacf[5])
+    pacf_1vec <- append(pacf_1vec, gpacf[1])
+    pacf_2vec <- append(pacf_2vec, gpacf[2])
+    pacf_3vec <- append(pacf_3vec, gpacf[3])
+    pacf_4vec <- append(pacf_4vec, gpacf[4])
+    pacf_5vec <- append(pacf_5vec, gpacf[5])
     mtcdf <- mtcgrpday(cgmtsall,useig = useig, threshold = threshold,  bthreshold = bthreshold, athreshold = athreshold, freq = freq)
     write.csv(mtcdf, paste(outputdir,fname, "_metricsByDay.csv",sep = ""),row.names = FALSE)
   }
   summetrics <- data.frame(ID = fnamevec, SD = sdvec, Mean = meanvec, CV = cvvec, GMI = gmisvec,
                            LBGI = lbgivec, HBGI = hbgivec, MAGE = magevec, TIR = tirvec,
-                           MODD = moddvec,acf_1 = gacf[1], acf_2 = gacf[2], acf_3 = gacf[3],
-                           acf_4 = gacf[4], acf_5 = gacf[5], pacf_1 = gpacf[1], pacf_2 = gpacf[2],
-                           pacf_3 = gpacf[3], pacf_4 = gpacf[4], pacf_5 = gpacf[5])
+                           MODD = moddvec,acf_1 = acf_1vec, acf_2 = acf_2vec, acf_3 = acf_3vec,
+                           acf_4 = acf_4vec, acf_5 = acf_5vec, pacf_1 = pacf_1vec, pacf_2 = pacf_2vec,
+                           pacf_3 = pacf_3vec, pacf_4 = pacf_4vec, pacf_5 = pacf_5vec)
   write.csv(summetrics, paste(outputdir,"metricsSummary.csv",sep = ""),row.names = FALSE)
-
 }
 
 
@@ -82,7 +101,6 @@ mtcgrpday <- function(cgmtsall,useig = FALSE, threshold = 1,  bthreshold = 3.9, 
   tircol <- tir(cgmtsall = cgmtsall, useig = useig,  bthreshold = bthreshold, athreshold = athreshold, freq = freq)
   moddcol <- c(NA)
   moddcol <- append(moddcol, modd(cgmtsall = cgmtsall, useig = useig))
-
   metricsdf <- data.frame(Day = c(1:length(sdcol)), SD = sdcol, Mean = meancol, CV = cvcol,
                            LBGI = lbgicol, HBGI = hbgicol, MAGE = magecol, TIR = tircol,
                            MODD = moddcol)
