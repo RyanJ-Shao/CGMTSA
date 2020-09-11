@@ -235,6 +235,7 @@ mage <- function(cgmtsall, useig = FALSE, threshold = 1){
   magevec <- c()
   for(d in coldate){
     cgmts <- dplyr::filter(cgmtsall, timedate == d)
+
     daysd <- 0
     dayglucose <- c()
     if(useig){
@@ -243,6 +244,10 @@ mage <- function(cgmtsall, useig = FALSE, threshold = 1){
     }else{
       daysd <- sd(cgmts$sglucose)
       dayglucose <- cgmts$sglucose
+    }
+    if(daysd ==0){
+      magevec <- append(magevec, NA)
+      next
     }
     daysd <- threshold * daysd
     diffglucose <- diff(dayglucose)
@@ -281,7 +286,7 @@ mage <- function(cgmtsall, useig = FALSE, threshold = 1){
       }
     }
     tpdiff <- diff(turnpoints)
-    tpdiff <- tpdiff[abs(tpdiff) > daysd ]
+    tpdiff <- tpdiff[abs(tpdiff) > daysd]
     if(tpdiff[1] > 0){
       tpdiff <- tpdiff[tpdiff > 0]
     }else if(tpdiff[1] < 0){
