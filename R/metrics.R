@@ -285,6 +285,10 @@ mage <- function(cgmtsall, useig = FALSE, threshold = 1){
         }
       }
     }
+    if(length(turnpoints) == 1){
+      magevec <- append(magevec, NA)
+      next
+    }
     tpdiff <- diff(turnpoints)
     tpdiff <- tpdiff[abs(tpdiff) > daysd]
     if(tpdiff[1] > 0){
