@@ -38,7 +38,13 @@ fformat <- function(fpath, device = 0){
     return(cgmts)
   }else if(device == 1){
     cgmts <- read.table(fpath, sep = "\t", skip = 3, encoding = "UTF-8")
-    cgmts <- dplyr::select(cgmts, 2,4)
+    if(length(names(cgmts) >4)){
+      cgmts <- dplyr::select(cgmts, 2,4,5)
+      cgmts[is.na(cgmts$V4),]$V4 <- cgmts[is.na(cgmts$V4),]$V5
+      cgmts <- dplyr::select(cgmts, 1,2)
+    }else{
+      cgmts <- dplyr::select(cgmts, 2,4)
+    }
     names(cgmts) <- c("timestamp", "sglucose")
     cgmts <-  dplyr::mutate(cgmts, timestamp = gsub("/","-", cgmts$timestamp))
     cgmts <-  dplyr::mutate(cgmts, bglucose = NA)
