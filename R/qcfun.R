@@ -16,13 +16,9 @@ qcfun<- function(cgmts, outlierdet = TRUE, interval = 15, imputation = FALSE, im
   fday <- coldate[1]
   lday <- coldate[length(coldate)]
   if(removeflday){
-    if(length(cgmts[cgmts$timedate ==fday,]$timedate) <freq){
-      cgmts[cgmts$timedate ==fday,]$timedate <- NA
-    }
+    cgmts[cgmts$timedate ==fday,]$timedate <- NA
     cgmts <- cgmts[!is.na(cgmts$timedate),]
-    if(length(cgmts[cgmts$timedate ==lday,]$timedate) <freq){
-      cgmts[cgmts$timedate ==lday,]$timedate <- NA
-    }
+    cgmts[cgmts$timedate ==lday,]$timedate <- NA
     cgmts <- cgmts[!is.na(cgmts$timedate),]
   }
 
@@ -74,8 +70,7 @@ qcfun<- function(cgmts, outlierdet = TRUE, interval = 15, imputation = FALSE, im
         cgmts[cgmts$timedate ==d,]$timedate <- NA
       }
       cgmts <- cgmts[!is.na(cgmts$timedate),]
-  }
-
+    }
   }
   if(outlierdet == TRUE){
     cgmts <- dplyr::mutate(cgmts, outliers = NA)
@@ -116,7 +111,7 @@ qcfun<- function(cgmts, outlierdet = TRUE, interval = 15, imputation = FALSE, im
         cgmts[cgmts$timedate ==d,]$outliers <- udcgm$outliers
       }
     }
-    
+
   }
   return(cgmts)
 }
