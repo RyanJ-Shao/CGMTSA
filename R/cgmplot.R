@@ -9,8 +9,6 @@
 #' @param interval The interval of CGM data.
 #' @param diffnum The number of differencing.
 #' @param html Logical.If TRUE the interactive plot will be exported, else the static pdf plot will exported.
-
-
 #' @export
 
 cgmplot <- function(inputdir, outputdir, useig= FALSE, markoutliers= TRUE, interval = 15,
