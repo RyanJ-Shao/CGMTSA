@@ -90,7 +90,7 @@ cgmmetrics <- function(inputdir, outputdir, useig = FALSE, diffnum = 1, threshol
 
 
 mtcgrpday <- function(cgmtsall,useig = FALSE, threshold = 1,  bthreshold = 3.9, athreshold = 10, freq = 96){
-
+  coldate <- unique(cgmtsall$timedate)
   sdcol <- sdgrpbyday(cgmtsall = cgmtsall, useig = useig)
   meancol <- meangrpbyday(cgmtsall = cgmtsall, useig = useig)
   cvcol <- cvgrpbyday(cgmtsall = cgmtsall, useig = useig)
@@ -101,7 +101,7 @@ mtcgrpday <- function(cgmtsall,useig = FALSE, threshold = 1,  bthreshold = 3.9, 
   tircol <- tir(cgmtsall = cgmtsall, useig = useig,  bthreshold = bthreshold, athreshold = athreshold, freq = freq)
   moddcol <- c(NA)
   moddcol <- append(moddcol, modd(cgmtsall = cgmtsall, useig = useig))
-  metricsdf <- data.frame(Day = c(1:length(sdcol)), SD = sdcol, Mean = meancol, CV = cvcol,
+  metricsdf <- data.frame(Day = coldate, SD = sdcol, Mean = meancol, CV = cvcol,
                            LBGI = lbgicol, HBGI = hbgicol, MAGE = magecol, TIR = tircol,
                            MODD = moddcol)
   return(metricsdf)
@@ -285,12 +285,16 @@ mage <- function(cgmtsall, useig = FALSE, threshold = 1){
         }
       }
     }
-    if(length(turnpoints) == 1){
+    if(length(turnpoints) <=2){
       magevec <- append(magevec, NA)
       next
     }
     tpdiff <- diff(turnpoints)
     tpdiff <- tpdiff[abs(tpdiff) > daysd]
+    if(length(tpdiff) ==0){
+      magevec <- append(magevec, NA)
+      next
+    }
     if(tpdiff[1] > 0){
       tpdiff <- tpdiff[tpdiff > 0]
     }else if(tpdiff[1] < 0){
