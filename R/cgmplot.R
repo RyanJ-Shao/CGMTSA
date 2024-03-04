@@ -17,7 +17,15 @@ cgmplot <- function(inputdir, outputdir, useig= FALSE, markoutliers= TRUE, inter
   for(f in fileNames){
     fname = unlist(strsplit(f, split = "\\."))[1]
     print(paste("processing file:", f))
-    cgmtsall = read.csv(paste(inputdir, "/", f, sep = ''),stringsAsFactors= FALSE)
+    cgmtsall = read.csv(paste(inputdir, "/", f, sep = ''),stringsAsFactors = FALSE)
+    
+    if(useig){
+      cgmtsall <- cgmtsall[!is.na(cgmtsall$imglucose),] 
+    }else{
+      cgmtsall <- cgmtsall[!is.na(cgmtsall$sglucose),] 
+    }
+    
+    cgmtsall <- cgmtsall[order(lubridate::ymd_hm(cgmtsall$timestamp)),]
     vectimestamp <- as.vector(cgmtsall$timestamp)
     vectimestamp <- unlist(strsplit(vectimestamp,split=" "))
     maxtimestamp <- matrix(vectimestamp,ncol=2,byrow=T)[,1]
