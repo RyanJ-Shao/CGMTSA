@@ -45,7 +45,13 @@ cgmmetrics <- function(inputdir, outputdir, useig = FALSE, diffnum = 1, threshol
     vectimestamp <- unlist(strsplit(vectimestamp,split=" "))
     maxtimestamp <- matrix(vectimestamp,ncol=2,byrow=T)[,1]
     cgmtsall <- dplyr::mutate(cgmtsall, timedate = maxtimestamp)
-
+    
+    if(useig){
+      cgmtsall <- cgmtsall[!is.na(cgmtsall$imglucose),] 
+    }else{
+      cgmtsall <- cgmtsall[!is.na(cgmtsall$sglucose),] 
+    }
+    
     sd <- sdall(cgmtsall = cgmtsall, useig = useig)
     sdvec <- append(sdvec, sd)
     mean <- meanall(cgmtsall = cgmtsall,useig = useig)
@@ -251,7 +257,7 @@ mage <- function(cgmtsall, useig = FALSE, threshold = 1){
     }
     daysd <- threshold * daysd
     diffglucose <- diff(dayglucose)
-
+    
     inorder <- TRUE
     sflag <- TRUE
     turnpoints <- c()
