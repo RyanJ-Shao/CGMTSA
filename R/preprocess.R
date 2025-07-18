@@ -34,7 +34,7 @@ prepro <- function(inputdir="", outputdir="", outlierdet = TRUE, interval = 15, 
 fformat <- function(fpath, device = 0){
   cgmts = ""
   if(device == 0){
-    cgmts <- read.csv(fpath)
+    cgmts <- make_column_numeric(fpath, "sglucose")
     return(cgmts)
   }else if(device == 1){
     cgmts <- read.table(fpath, sep = "\t", skip = 3, encoding = "UTF-8")
@@ -68,3 +68,8 @@ fformat <- function(fpath, device = 0){
   return(cgmts)
 }
 
+make_column_numeric <- function(file_path, column_name) {
+  df <- read.csv(file_path, colClasses = setNames("character", column_name))
+  df[[column_name]] <- suppressWarnings(as.numeric(df[[column_name]]))
+  return(df)
+}
