@@ -28,6 +28,7 @@ qcfun<- function(cgmts, outlierdet = TRUE, interval = 15, imputation = FALSE, im
 
   coldate <- unique(cgmts$timedate)
   if(compeleteday){
+    cgmts <- cgmts[!is.na(cgmts$sglucose), ]
     for (d in coldate){
       if (length(cgmts[cgmts$timedate == d,]$timedate) < freq){
         cgmts[cgmts$timedate ==d,]$timedate <- NA
