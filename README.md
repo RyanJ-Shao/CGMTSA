@@ -33,8 +33,8 @@ This project is licensed under The MIT License.
 ## 4. Install CGMTSA Package in R
 The package can be installed from GitHub directly:
 ```
-library(“devtools”)
-install_github(“RyanJ-Shao/CGMTSA”)
+library("devtools")
+install_github("RyanJ-Shao/CGMTSA")
 ```
 ## 5. Data Format
 CGMTSA package accept CSV file as input. The input file includes three columns: "timestamp","sglucose","bglucose", every column are separated by comma. For example:
